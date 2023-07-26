@@ -15,12 +15,12 @@ function TodoList(todos) {
 
 
   useEffect(() => {
-    console.log(todos.todos, "listttttttttttttt")
     setDataList(todos.todos)
 
   }, [])
 
 
+  // To make changes in todo
   const addTodo = async () => {
     if (todoInput.current.value.length <= 0) {
       toast.error('todo can not be empty !', {
@@ -36,6 +36,7 @@ function TodoList(todos) {
     }
 
 
+    // To add todo
     if (!updateData) {
       const id = toast.loading("Please wait...")
       const response = fetch('https://jsonplaceholder.typicode.com/todos', {
@@ -60,7 +61,7 @@ function TodoList(todos) {
       }
 
     } else {
-
+      // To delete todo
       const id = toast.loading("Please wait...")
       const response = fetch(`https://jsonplaceholder.typicode.com/todos/${updateData}`, {
         method: 'PUT',
@@ -90,17 +91,19 @@ function TodoList(todos) {
     document.getElementById("todo").value = ""
   }
 
-
+  // To observe todo field changes
   const todoChange = (e) => {
     todoInput.current.value = e.target.value
   }
 
+  // To reset form
   const resetForm = () => {
     setDropdownTitle("Select status")
     document.getElementById("todo").value = ""
   }
 
 
+  // To delete todo
   const deleteTodo = (e) => {
     fetch(`https://jsonplaceholder.typicode.com/posts/${e.target.id}`, {
       method: 'DELETE',
@@ -112,6 +115,7 @@ function TodoList(todos) {
 
   }
 
+  // To uodate todo
   const updateTodo = (e) => {
     const obj = dataList.filter((element) => {
       if (+e.target.id === element.id) {
@@ -128,11 +132,8 @@ function TodoList(todos) {
 
   return (
     <div style={{ width: "50%", marginLeft: "20%" }}>
-
-
       <Stack direction="horizontal" gap={3} style={{ padding: "10px" }}>
         <Form.Control className="me-auto" ref={todoInput} onChange={todoChange} id="todo" placeholder="Add your todo here..." />
-
         <DropdownButton variant="success" id="dropdown-basic-button" title={dropdownTitle}>
           <Dropdown.Item onClick={() => setDropdownTitle("Completed")} >Completed</Dropdown.Item>
           <Dropdown.Item onClick={() => setDropdownTitle("Not Completed")} >Not Completed</Dropdown.Item>
@@ -143,8 +144,6 @@ function TodoList(todos) {
         <div className="vr" />
         <Button variant="outline-danger" onClick={resetForm}>Reset</Button>
       </Stack>
-
-
 
       <Container>
         <Stack gap={3}>

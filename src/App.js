@@ -1,40 +1,37 @@
-import { useState,useEffect } from "react";
-import TodoList from "./TodoList" 
+import { useState, useEffect } from "react";
+import TodoList from "./TodoList"
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
 
+  // To store todos
+  const [todos, setTodos] = useState();
 
-  const [todos,setTodos] = useState();
-
-  const fetchTodo= async()=>{
+  // fetching todo list
+  const fetchTodo = async () => {
     const response = fetch(
       "https://jsonplaceholder.typicode.com/todos")
-                  
-      const result = await response
-      const final = await result.json()
+
+    const result = await response
+    const final = await result.json()
 
     setTodos(final)
-  
+
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchTodo()
-    
-
-  },[])
 
 
-    
-
-
+  }, [])
 
 
 
 
   return (
     <div className="App">
-      {todos && <TodoList todos = {todos}/>}
+      {/* rendering TodoList component */}
+      {todos && <TodoList todos={todos} />}
     </div>
   );
 }
